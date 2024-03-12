@@ -3,7 +3,6 @@ import Text from "./Text";
 
 const styles = StyleSheet.create({
   flexContainer: {
-    //paddingTop:
     display: "flex",
     flexDirection: "row",
     gap: 20,
