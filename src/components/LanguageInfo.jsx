@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
 });
 
 const LanguageInfo = ({ item }) => {
+  if (!item.language) return;
+
   return (
     <View style={styles.languageContainer}>
       <View style={styles.flexItem}>

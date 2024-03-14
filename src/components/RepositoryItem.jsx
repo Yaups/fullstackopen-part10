@@ -4,7 +4,7 @@ import NumbersInfo from "./NumbersInfo";
 import LanguageInfo from "./LanguageInfo";
 import theme from "../theme";
 import { useNavigate } from "react-router-native";
-import * as Linking from "expo-linking";
+import { openURL } from "expo-linking";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -83,10 +83,7 @@ const RepositoryItem = ({ item, individualView }) => {
         </View>
 
         {individualView && (
-          <Pressable
-            style={styles.button}
-            onPress={() => Linking.openURL(item.url)}
-          >
+          <Pressable style={styles.button} onPress={() => openURL(item.url)}>
             <Text fontWeight={"bold"} style={styles.buttonText}>
               Open in GitHub
             </Text>

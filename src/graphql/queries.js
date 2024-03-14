@@ -33,6 +33,20 @@ export const GET_REPOSITORY = gql`
       stargazersCount
       ownerAvatarUrl
       url
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;

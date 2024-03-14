@@ -2,6 +2,7 @@ import { StyleSheet, Pressable, View } from "react-native";
 import { useApolloClient } from "@apollo/client";
 import useAuthStorage from "../hooks/useAuthStorage";
 import Text from "./Text";
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
   flexItem: {
@@ -15,10 +16,12 @@ const styles = StyleSheet.create({
 const SignOutTab = () => {
   const apolloClient = useApolloClient();
   const authStorage = useAuthStorage();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await authStorage.removeAccessToken();
     apolloClient.resetStore();
+    navigate("/");
   };
 
   return (

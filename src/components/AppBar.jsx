@@ -25,15 +25,24 @@ const AppBar = () => {
     return console.error(error);
   }
 
+  const isSignedIn = !loading && data.me;
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab label="Repositories" destination={"/"} />
-        {!loading && !data.me ? (
-          <AppBarTab label="Sign In" destination={"/signIn"} />
-        ) : (
-          <SignOutTab />
+
+        {isSignedIn && (
+          <AppBarTab label="Create a review" destination={"/reviewForm"} />
         )}
+
+        {isSignedIn ? (
+          <SignOutTab />
+        ) : (
+          <AppBarTab label="Sign In" destination={"/signIn"} />
+        )}
+
+        {!isSignedIn && <AppBarTab label="Sign up" destination={"/signUp"} />}
       </ScrollView>
     </View>
   );

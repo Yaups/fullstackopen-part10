@@ -50,7 +50,7 @@ const validationSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
 });
 
-export const SignInContainer = ({ onSubmit }) => {
+export const SignInFormContainer = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -71,7 +71,7 @@ export const SignInContainer = ({ onSubmit }) => {
           value={formik.values.username}
           onChangeText={formik.handleChange("username")}
         />
-        {formik.errors.username && (
+        {formik.touched.username && formik.errors.username && (
           <Text style={{ color: theme.colors.error }}>
             {formik.errors.username}
           </Text>
@@ -79,7 +79,11 @@ export const SignInContainer = ({ onSubmit }) => {
       </View>
       <View style={styles.flexComponent}>
         <TextInput
-          style={formik.errors.password ? styles.inputError : styles.input}
+          style={
+            formik.touched.password && formik.errors.password
+              ? styles.inputError
+              : styles.input
+          }
           secureTextEntry
           autoCapitalize="none"
           placeholder="Password"
@@ -101,7 +105,7 @@ export const SignInContainer = ({ onSubmit }) => {
   );
 };
 
-const SignIn = () => {
+const SignInForm = () => {
   const [signIn] = useSignIn();
   const navigate = useNavigate();
 
@@ -116,7 +120,7 @@ const SignIn = () => {
     }
   };
 
-  return <SignInContainer onSubmit={onSubmit} />;
+  return <SignInFormContainer onSubmit={onSubmit} />;
 };
 
-export default SignIn;
+export default SignInForm;
