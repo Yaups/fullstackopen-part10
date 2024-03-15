@@ -1,6 +1,6 @@
-import Text from "./Text";
+import Text from "../Text";
 import { View, StyleSheet } from "react-native";
-import theme from "../theme";
+import theme from "../../theme";
 
 const styles = StyleSheet.create({
   languageContainer: {

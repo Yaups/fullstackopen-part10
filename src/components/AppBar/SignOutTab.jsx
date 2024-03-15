@@ -1,7 +1,7 @@
 import { StyleSheet, Pressable, View } from "react-native";
 import { useApolloClient } from "@apollo/client";
-import useAuthStorage from "../hooks/useAuthStorage";
-import Text from "./Text";
+import useAuthStorage from "../../hooks/useAuthStorage";
+import Text from "../Text";
 import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({

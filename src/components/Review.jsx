@@ -9,12 +9,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
-  containerVertical: {
-    display: "flex",
-    flexDirection: "column",
-    flexGrow: 1,
-    flexShrink: 1,
-  },
   rating: {
     width: 40,
     height: 40,
@@ -28,7 +22,7 @@ const styles = StyleSheet.create({
   },
   flexItem: {
     padding: 5,
-    flexGrow: 1,
+    flexGrow: 0,
     flexShrink: 1,
   },
 });

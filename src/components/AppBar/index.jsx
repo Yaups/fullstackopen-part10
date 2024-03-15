@@ -1,8 +1,8 @@
 import { ScrollView, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import theme from "../theme";
+import theme from "../../theme";
 import AppBarTab from "./AppBarTab";
-import { USER_INFO } from "../graphql/queries";
+import { USER_INFO } from "../../graphql/queries";
 import { useQuery } from "@apollo/client";
 import SignOutTab from "./SignOutTab";
 

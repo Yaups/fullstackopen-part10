@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet, Pressable } from "react-native";
 import Text from "./Text";
-import NumbersInfo from "./NumbersInfo";
-import LanguageInfo from "./LanguageInfo";
+import NumbersInfo from "./RepositoryList/NumbersInfo";
+import LanguageInfo from "./RepositoryList/LanguageInfo";
 import theme from "../theme";
 import { useNavigate } from "react-router-native";
 import { openURL } from "expo-linking";
