@@ -16,11 +16,28 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const IndividualRepository = () => {
   const { repositoryId } = useParams();
+  const variables = { id: repositoryId, first: 5 };
 
-  const { data, loading, error } = useQuery(GET_REPOSITORY, {
-    variables: { id: repositoryId },
+  const { data, loading, error, fetchMore } = useQuery(GET_REPOSITORY, {
+    variables,
     fetchPolicy: "cache-and-network",
   });
+
+  const onEndReach = () => {
+    const canFetchMore =
+      !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repository.reviews.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
 
   if (error) {
     return <Text>Error: {error.message}</Text>;
@@ -44,6 +61,8 @@ const IndividualRepository = () => {
       ListHeaderComponent={() => (
         <RepositoryItem individualView={true} item={data.repository} />
       )}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={1}
     />
   );
 };

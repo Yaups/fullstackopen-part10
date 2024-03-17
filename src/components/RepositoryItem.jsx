@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepositoryItem = ({ item, individualView }) => {
-  const navigate = useNavigate();
+const RepositoryItem = ({ item, individualView, notTesting }) => {
+  const navigate = notTesting ? useNavigate() : () => null;
 
   const handlePress = () => {
     if (!individualView) navigate(`/${item.id}`);

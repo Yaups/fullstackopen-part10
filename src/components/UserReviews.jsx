@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const UserReviews = () => {
-  const { data, loading, error, refetch } = useQuery(USER_INFO, {
+  const { data, loading, error } = useQuery(USER_INFO, {
     variables: { includeReviews: true },
     fetchPolicy: "cache-and-network",
   });
@@ -35,9 +35,7 @@ const UserReviews = () => {
     <FlatList
       data={reviewNodes}
       ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => (
-        <Review review={item} showUserButtons={true} refetch={refetch} />
-      )}
+      renderItem={({ item }) => <Review review={item} showUserButtons={true} />}
       keyExtractor={({ id }) => id}
     />
   );

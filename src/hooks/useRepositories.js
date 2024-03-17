@@ -8,6 +8,7 @@ const useRepositories = (sortBy, filterText) => {
     orderBy: "CREATED_AT",
     orderDirection: "DESC",
     searchKeyword: filterText,
+    first: 5,
   };
 
   switch (sortBy) {
@@ -29,10 +30,25 @@ const useRepositories = (sortBy, filterText) => {
     }
   }
 
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, {
+  const { data, error, loading, fetchMore } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: "cache-and-network",
     variables,
   });
+
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
 
   if (error) {
     return console.error(error);
@@ -41,6 +57,7 @@ const useRepositories = (sortBy, filterText) => {
   return {
     repositories: loading ? null : data.repositories,
     loading,
+    fetchMore: handleFetchMore,
     refetch: () =>
       client.refetchQueries({
         include: [GET_REPOSITORIES],

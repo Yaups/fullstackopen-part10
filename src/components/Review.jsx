@@ -5,6 +5,7 @@ import Text from "./Text";
 import theme from "../theme";
 
 import { DELETE_REVIEW } from "../graphql/mutations";
+import { USER_INFO } from "../graphql/queries";
 import { useMutation } from "@apollo/client";
 
 const styles = StyleSheet.create({
@@ -65,9 +66,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const UserButtons = ({ review, refetch }) => {
+const UserButtons = ({ review }) => {
   const navigate = useNavigate();
-  const [deleteReview] = useMutation(DELETE_REVIEW);
+  const [deleteReview] = useMutation(DELETE_REVIEW, {
+    refetchQueries: [USER_INFO],
+  });
 
   const redirectToRepository = () => {
     if (review.repositoryId) navigate(`/${review.repositoryId}`);
@@ -92,10 +95,7 @@ const UserButtons = ({ review, refetch }) => {
   };
 
   const handleDeletion = async () => {
-    console.log("Deleting review!!!", review.id);
-
     await deleteReview({ variables: { reviewId: review.id } });
-    refetch();
   };
 
   return (
@@ -118,7 +118,7 @@ const UserButtons = ({ review, refetch }) => {
   );
 };
 
-const Review = ({ review, showUserButtons, refetch }) => {
+const Review = ({ review, showUserButtons }) => {
   if (!review) return;
 
   return (
@@ -139,7 +139,7 @@ const Review = ({ review, showUserButtons, refetch }) => {
           <Text>{review.text}</Text>
         </View>
       </View>
-      {showUserButtons && <UserButtons review={review} refetch={refetch} />}
+      {showUserButtons && <UserButtons review={review} />}
     </View>
   );
 };
