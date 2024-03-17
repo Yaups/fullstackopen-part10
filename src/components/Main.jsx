@@ -6,6 +6,7 @@ import AppBar from "./AppBar";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 import ReviewForm from "./ReviewForm";
+import UserReviews from "./UserReviews";
 import theme from "../theme";
 
 const styles = StyleSheet.create({
@@ -26,6 +27,7 @@ const Main = () => {
         <Route path="/signIn" element={<SignInForm />} />
         <Route path="/signUp" element={<SignUpForm />} />
         <Route path="/reviewForm" element={<ReviewForm />} />
+        <Route path="/userReviews" element={<UserReviews />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

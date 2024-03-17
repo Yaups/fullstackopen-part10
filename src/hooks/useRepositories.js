@@ -1,12 +1,13 @@
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = (sortBy) => {
+const useRepositories = (sortBy, filterText) => {
   const client = useApolloClient();
 
   const variables = {
     orderBy: "CREATED_AT",
     orderDirection: "DESC",
+    searchKeyword: filterText,
   };
 
   switch (sortBy) {
@@ -27,8 +28,6 @@ const useRepositories = (sortBy) => {
       break;
     }
   }
-
-  console.log(variables);
 
   const { data, error, loading } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: "cache-and-network",

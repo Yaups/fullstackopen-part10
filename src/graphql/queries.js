@@ -1,22 +1,21 @@
 import { gql } from "@apollo/client";
+import { CORE_REVIEW_FIELDS, CORE_REPOSITORY_FIELDS } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
+  ${CORE_REPOSITORY_FIELDS}
   query Repositories(
     $orderBy: AllRepositoriesOrderBy!
     $orderDirection: OrderDirection!
+    $searchKeyword: String!
   ) {
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+    repositories(
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      searchKeyword: $searchKeyword
+    ) {
       edges {
         node {
-          description
-          forksCount
-          fullName
-          id
-          language
-          ratingAverage
-          reviewCount
-          stargazersCount
-          ownerAvatarUrl
+          ...CoreRepositoryFields
         }
       }
     }
@@ -24,29 +23,16 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_REPOSITORY = gql`
+  ${CORE_REPOSITORY_FIELDS}
+  ${CORE_REVIEW_FIELDS}
   query getRepository($id: ID!) {
     repository(id: $id) {
-      description
-      forksCount
-      fullName
-      id
-      language
-      ratingAverage
-      reviewCount
-      stargazersCount
-      ownerAvatarUrl
+      ...CoreRepositoryFields
       url
       reviews {
         edges {
           node {
-            id
-            text
-            rating
-            createdAt
-            user {
-              id
-              username
-            }
+            ...CoreReviewFields
           }
         }
       }
@@ -55,10 +41,19 @@ export const GET_REPOSITORY = gql`
 `;
 
 export const USER_INFO = gql`
-  query {
+  ${CORE_REVIEW_FIELDS}
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
       id
       username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            ...CoreReviewFields
+            repositoryId
+          }
+        }
+      }
     }
   }
 `;

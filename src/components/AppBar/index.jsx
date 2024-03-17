@@ -36,6 +36,10 @@ const AppBar = () => {
           <AppBarTab label="Create a review" destination={"/reviewForm"} />
         )}
 
+        {isSignedIn && (
+          <AppBarTab label="My reviews" destination={"/userReviews"} />
+        )}
+
         {isSignedIn ? (
           <SignOutTab />
         ) : (

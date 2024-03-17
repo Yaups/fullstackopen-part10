@@ -26,7 +26,7 @@ const IndividualRepository = () => {
     return <Text>Error: {error.message}</Text>;
   }
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return;
 
   if (!data) return <Text>No repository info found!</Text>;
 

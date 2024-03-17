@@ -2,7 +2,9 @@ import { FlatList, View, StyleSheet } from "react-native";
 import RepositoryItem from "../RepositoryItem";
 import useRepositories from "../../hooks/useRepositories";
 import SortBy from "./SortBy";
+import FilterText from "./FilterText";
 import { useState } from "react";
+import { useDebounce } from "use-debounce";
 
 const styles = StyleSheet.create({
   separator: {
@@ -12,11 +14,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({
-  repositories,
-  sortBy,
-  setSortBy,
-}) => {
+export const RepositoryListContainer = ({ repositories }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -29,21 +27,23 @@ export const RepositoryListContainer = ({
         <RepositoryItem individualView={false} item={item} />
       )}
       keyExtractor={(item) => item.id}
-      ListHeaderComponent={<SortBy sortBy={sortBy} setSortBy={setSortBy} />}
     />
   );
 };
 
 const RepositoryList = () => {
   const [sortBy, setSortBy] = useState("latestAdditionFirst");
-  const { repositories } = useRepositories(sortBy);
+  const [filterText, setFilterText] = useState("");
+  const [debouncedFilterText] = useDebounce(filterText, 500);
+
+  const { repositories } = useRepositories(sortBy, debouncedFilterText);
 
   return (
-    <RepositoryListContainer
-      repositories={repositories}
-      sortBy={sortBy}
-      setSortBy={setSortBy}
-    />
+    <>
+      <FilterText filterText={filterText} setFilterText={setFilterText} />
+      <SortBy sortBy={sortBy} setSortBy={setSortBy} />
+      <RepositoryListContainer repositories={repositories} />
+    </>
   );
 };
 
